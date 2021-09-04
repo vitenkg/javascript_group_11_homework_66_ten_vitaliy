@@ -1,0 +1,15 @@
+.CountryList {
+    display: inline-block;
+    width: 400px;
+    height: 98vh;
+    overflow-y: scroll;
+    border: #6d787d solid 1px;
+    border-radius: 3px;
+    padding-bottom: 10px;
+}
+
+.List {
+    display: block;
+    cursor: pointer;
+    margin: 5px;
+}
