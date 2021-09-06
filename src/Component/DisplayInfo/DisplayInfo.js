@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {COUNTRY_URL} from "../../config";
 import './DisplayInfo.css';
+import axiosApi from "../../axiosApi";
 
 const DisplayInfo = props => {
     const [borders, setBorders] = useState(null);
 
     useEffect(() => {
-        console.log('useEffect');
         const fetchData = async () => {
-            console.log('Async');
             if (props.CountryInfo !== null) {
                 const bordersC = props.CountryInfo.borders.map(async border => {
-                    return await axios.get(COUNTRY_URL + border);
+                    return await axiosApi.get(COUNTRY_URL + border);
                 });
                 const bordersCountry = await Promise.all(bordersC);
-                console.log(bordersCountry);
                 setBorders(bordersCountry.map(border => {
                     return border.data.name
                 }));
@@ -32,10 +29,9 @@ const DisplayInfo = props => {
             <p>Столица {props.CountryInfo.capital}</p>
             <p>Регион {props.CountryInfo.region}</p>
             <p>Насаление {props.CountryInfo.population} чел</p>
-            {borders && (<ul>{borders.length > 0 ? 'Граничит с:' : null}{borders.map(border => {
-                let i = 0;
-                return (<li key={i++}><p>{border}</p></li>
-            )})}</ul>)}
+            {borders && (<ul>{borders.length > 0 ? 'Граничит с:' : null}{borders.map((border, i) => {
+                return (<li key={i}><p>{border}</p></li>)
+            })}</ul>)}
         </div>
     );
 };

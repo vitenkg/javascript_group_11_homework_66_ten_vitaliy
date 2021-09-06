@@ -2,7 +2,6 @@ import React from 'react';
 import './DisplayCountry.css';
 
 const DisplayCountry = (props) => {
-    console.log(props.Countries);
     return props.Countries && (
         <div className="CountryList">
             <ul>

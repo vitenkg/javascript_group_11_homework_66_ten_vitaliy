@@ -1,10 +1,11 @@
-
-import './Country.css';
-import axios from "axios";
 import {BASE_URL_GET_ALL, COUNTRY_URL} from "../../config";
 import DisplayCountry from "../../Component/DisplayCountry/DisplayCountry";
 import DisplayInfo from "../../Component/DisplayInfo/DisplayInfo";
 import {useEffect, useState} from "react";
+import axiosApi from "../../axiosApi";
+import './Country.css';
+import withErrorHandler from "../../hoc/withErrorHandler";
+
 
 const Country = () => {
     const [countries, setCountries] = useState(null);
@@ -12,7 +13,7 @@ const Country = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(BASE_URL_GET_ALL);
+            const response = await axiosApi.get(BASE_URL_GET_ALL);
             setCountries(response.data.map(city =>
                 ({
                 ...city,
@@ -26,8 +27,8 @@ const Country = () => {
 
     const onCountryHandle = alfa => {
         console.log(alfa);
-        const fetchData = async () => {
-            const response = await axios.get(COUNTRY_URL + alfa)
+            const fetchData = async () => {
+            const response = await axiosApi.get(COUNTRY_URL + alfa)
             setCountryInfo(response.data);
         };
         fetchData().catch(e => console.log(e));
@@ -47,4 +48,4 @@ const Country = () => {
     );
 };
 
-export default Country;
+export default withErrorHandler(Country, axiosApi);
